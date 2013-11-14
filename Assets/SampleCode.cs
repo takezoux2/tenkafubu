@@ -14,7 +14,7 @@ public class SampleCode : MonoBehaviour {
 		user.age = 34;
 		user.lastLogin = DateTime.Now;
 		
-		var jsonizer = new Jsonizer();
+		var jsonizer = Jsonizer.Default;
 		var json = jsonizer.ToJson(user);
 		
 		Debug.Log("Json = " + json);

@@ -7,5 +7,6 @@
 
 Temp/
 Library/
-ProjectSettings/
 TestReports/
+
+.DS_Store

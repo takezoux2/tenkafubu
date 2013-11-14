@@ -17,6 +17,9 @@ namespace Tenkafubu.Sqlite
 				return defaultInstance;
 			}
 		}
+		public static void CleanMemory(){
+			defaultInstance = null;
+		}
 		
 		static void SetUp(ConverterRepository repo){
 			repo.SetTableConverterGenerator(new ReflectionConverterGenerator()); 
@@ -51,7 +54,14 @@ namespace Tenkafubu.Sqlite
 		}
 		
 		public ColumnConverter GetColumConverter(Type t){
-			return columnConverters[t];
+			if(columnConverters.ContainsKey(t)){
+				return columnConverters[t];
+			}else{
+				return GetDefaultColumnConverter(t);
+			}
+		}
+		protected ColumnConverter GetDefaultColumnConverter(Type t){
+			return new JsonColumnConverter(t);
 		}
 		
 		public TableConverter<T> GetTableConverter<T>(){

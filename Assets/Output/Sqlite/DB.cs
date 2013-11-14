@@ -23,6 +23,10 @@ namespace Tenkafubu.Sqlite
 			return new TableOperation<T>(database,repo.GetTableConverter<T>());
 		}
 		
+		public void Close(){
+			database.Close();
+		}
+		
 		
 	}
 }

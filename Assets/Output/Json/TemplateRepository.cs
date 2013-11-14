@@ -8,16 +8,19 @@ namespace Tenkafubu.Json
 	public class TemplateRepository
 	{
 		
-		static TemplateRepository instance;
-		public static TemplateRepository Instance{
+		static TemplateRepository defaultInstance;
+		public static TemplateRepository Default{
 			get{
-				if(instance == null){
-					instance = new TemplateRepository();
-					RegisterDefaultTemplates(instance);
+				if(defaultInstance == null){
+					defaultInstance = new TemplateRepository();
+					RegisterDefaultTemplates(defaultInstance);
 				}
 				
-				return instance;
+				return defaultInstance;
 			}
+		}
+		public static void CleanMemory(){
+			defaultInstance = null;
 		}
 		
 		static void RegisterDefaultTemplates(TemplateRepository repo){
@@ -39,7 +42,7 @@ namespace Tenkafubu.Json
 		List<DynamicJsonizeTemplate> dynamicTemplates = new List<DynamicJsonizeTemplate>();
 		List<TemplateGenerator> generators = new List<TemplateGenerator>();
 		
-		private TemplateRepository ()
+		public TemplateRepository ()
 		{
 		}
 		

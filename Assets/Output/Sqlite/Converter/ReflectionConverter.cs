@@ -24,7 +24,7 @@ namespace Tenkafubu.Sqlite.Converter
 		public T FromRow (SqliteDatabase.ResultSet resultSet)
 		{
 			var instance = ReflectionSupport.CreateNewInstance(typeof(T));
-			foreach(var f in desc.fields){
+			foreach(var f in desc.dbFields){
 				var cc = repo.GetColumConverter(f.FieldType);
 				f.Set (instance,cc.ConvertFrom(resultSet,f.nameForDB));
 			}
@@ -50,9 +50,8 @@ namespace Tenkafubu.Sqlite.Converter
 			var builder = new StringBuilder();	
 			builder.Append("INSERT INTO " + desc.tableName + " (");
 			
-			var fields = new List<Tenkafubu.Reflection.FieldDesc>(desc.fields);
+			var fields = new List<Tenkafubu.Reflection.FieldDesc>(desc.dbFields);
 			if(desc.primaryKeyField != null && desc.primaryKeyField.autoIncrement){
-				fields = new List<Tenkafubu.Reflection.FieldDesc>(fields);
 				fields.Remove(desc.primaryKeyField);
 			}
 			
@@ -78,7 +77,8 @@ namespace Tenkafubu.Sqlite.Converter
 			if(desc.primaryKeyField == null) throw new Exception("Class " + desc.t + " doesn't have primary key field");
 			var builder = new StringBuilder();	
 			builder.Append("UPDATE " + desc.tableName + " SET ");
-			foreach(var f in desc.fields){
+			foreach(var f in desc.dbFields){
+				if(f.ignoreInDB) continue;
 				if(f.isPrimary) continue;
 				var cc = repo.GetColumConverter(f.FieldType);
 				object fieldValue = f.Get(v);
@@ -119,7 +119,7 @@ namespace Tenkafubu.Sqlite.Converter
 		{
 			var builder = new StringBuilder();	
 			builder.Append("CREATE TABLE IF NOT EXISTS " + TableName + "(");
-			foreach(var f in desc.fields){
+			foreach(var f in desc.dbFields){
 				var cc = repo.GetColumConverter(f.FieldType);
 				builder.Append(f.nameForDB + " " + cc.ColumnType);
 				if(f.isPrimary){

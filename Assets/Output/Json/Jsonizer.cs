@@ -6,11 +6,24 @@ using System;
 namespace Tenkafubu.Json{
 
 	public class Jsonizer {
+		
+		static Jsonizer defaultInstance;
+		public static Jsonizer Default{
+			get{
+				if(defaultInstance == null){
+					defaultInstance = new Jsonizer(TemplateRepository.Default);
+				}
+				return defaultInstance;
+			}
+		}
+		public static void CleanMemory(){
+			defaultInstance = null;
+		}
 	
 		TemplateRepository repository;
 		
-		public Jsonizer(){
-			repository = TemplateRepository.Instance;
+		public Jsonizer(TemplateRepository repo){
+			repository = repo;
 		}
 		
 		public void RegisterTemplate<T>(JsonizeTemplate template){
@@ -45,9 +58,25 @@ namespace Tenkafubu.Json{
 				throw e;
 			}	
 		}
+		
+		public object FromJsonObject(Type t , object jsonObj){
+			var template = repository.GetTemplate(t);
+			try{
+				var v = template.FromJsonValue(t,jsonObj);
+				return v;
+			}catch(Exception e){
+				Debug.LogError(string.Format("Fail to convert {0} to json",t));
+				throw e;
+			}	
+		}
+		
 		public T FromJson<T>(string json) {
 			var jsonObj = Jsonize.Deserialize(json);
 			return FromJsonObject<T>(jsonObj);
+		}
+		public object FromJson(Type t,string json){
+			var jsonObj = Jsonize.Deserialize(json);
+			return FromJsonObject(t,jsonObj);
 		}
 		
 		public List<T> FromJsonObjectByList<T>(object jsonArray){

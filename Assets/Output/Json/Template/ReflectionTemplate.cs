@@ -19,7 +19,7 @@ namespace Tenkafubu.Json.Template
 			if(obj == null)return JNothing.Nothing;
 			
 			var jsonObj = new Dictionary<string,object>();
-			foreach(var f in desc.fields){
+			foreach(var f in desc.jsonFields){
 				var v = f.Get(obj);
 				
 				var t = repo.GetTemplate(f.FieldType);
@@ -36,8 +36,8 @@ namespace Tenkafubu.Json.Template
 		{
 			var jsonObj = (Dictionary<string,object>)v;
 			var instance = ReflectionSupport.CreateNewInstance(t);
-			foreach(var f in desc.fields){
-				if(jsonObj.ContainsKey(f.nameForJson)){
+			foreach(var f in desc.jsonFields){
+				if(!f.ignoreInJson && jsonObj.ContainsKey(f.nameForJson)){
 					var template = repo.GetTemplate(f.FieldType);
 					var fv = template.FromJsonValue(f.FieldType,jsonObj[f.nameForJson]);
 					if(fv != null){

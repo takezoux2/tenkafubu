@@ -20,7 +20,7 @@ namespace Tenkafubu.Json
 			user.rate2 = 0.0023;
 			user.lastLogin = DateTime.Now;
 			
-			var jsonizer = new Jsonizer();
+			var jsonizer = Jsonizer.Default;
 			
 			var json = jsonizer.ToJson(user);
 			Assert.NotNull(json);
@@ -50,7 +50,7 @@ namespace Tenkafubu.Json
 			users[1] = new User();
 			users[2] = new User();
 			
-			var jsonizer = new Jsonizer();
+			var jsonizer = Jsonizer.Default;
 			var json = jsonizer.ToJson(users);
 			
 			var des = jsonizer.FromJson<User[]>(json);
@@ -68,7 +68,7 @@ namespace Tenkafubu.Json
 			users.Add(new User());
 			users.Add(new User());
 			
-			var jsonizer = new Jsonizer();
+			var jsonizer = Jsonizer.Default;
 			var json = jsonizer.ToJson(users);
 			
 			var des = jsonizer.FromJsonByList<User>(json);

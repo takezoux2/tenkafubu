@@ -13,6 +13,9 @@ namespace Tenkafubu.Reflection
 				return defaultInstance;
 			}
 		}
+		public static void CleanMemory(){
+			defaultInstance = null;
+		}
 		
 		Dictionary<Type,ClassDesc> cache = new Dictionary<Type, ClassDesc>();
 		ClassDescMaker classDescMaker = new ClassDescMaker();
@@ -143,11 +146,22 @@ namespace Tenkafubu.Reflection
 		
 		public FieldDesc primaryKeyField;
 		
+		public FieldDesc[] dbFields;
+		public FieldDesc[] jsonFields;
 		
 		public ClassDesc(Type t,FieldDesc[] fields){
 			this.t = t;
 			tableName = t.Name;
 			this.fields = fields;
+			
+			List<FieldDesc> dbs = new List<FieldDesc>(fields.Length);
+			List<FieldDesc> jsons = new List<FieldDesc>(fields.Length);
+			foreach(var f in fields) {
+				if(!f.ignoreInDB) dbs.Add (f);
+				if(!f.ignoreInJson)jsons.Add (f);
+			}
+			dbFields = dbs.ToArray();
+			jsonFields = jsons.ToArray();
 		}
 	}
 	
