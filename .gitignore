@@ -1,0 +1,11 @@
+*.csproj
+*.pidb
+*.sln
+*.userprefs
+
+*.meta
+
+Temp/
+Library/
+ProjectSettings/
+TestReports/
