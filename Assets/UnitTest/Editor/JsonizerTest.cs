@@ -4,6 +4,7 @@ using SharpUnit;
 using System.Threading;
 using Tenkafubu.Util;
 using System.Collections.Generic;
+
 namespace Tenkafubu.Json
 {
 	public class JsonizerTest : TestCase

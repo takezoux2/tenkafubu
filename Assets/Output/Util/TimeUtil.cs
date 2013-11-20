@@ -25,6 +25,10 @@ namespace Tenkafubu.Util
 		public static DateTime FromUnixTime(long unixTime){
 			return UnixEpocTime.ToLocalTime().AddSeconds(unixTime);
 		}
+
+		public static long CurrentUnixTime_Sec() {
+			return ToUnixTime(DateTime.Now);
+		}
 	}
 }
 

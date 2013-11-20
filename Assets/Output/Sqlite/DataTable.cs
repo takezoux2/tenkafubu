@@ -16,7 +16,6 @@ namespace Tenkafubu.Sqlite
 	            {
 	                return base[column];
 	            }
-	            
 	            return null;
 	        }
 	        set

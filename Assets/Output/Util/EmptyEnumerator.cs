@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 
 
-namespace GeishaTokyo.Concurrent.Util
+namespace Tenkafubu.Util
 {
 	public class EmptyEnumerator : IEnumerator
 	{

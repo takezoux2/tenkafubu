@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Tenkafubu.Reflection;
 
 namespace Tenkafubu.Json.Template
 {
@@ -43,7 +44,7 @@ namespace Tenkafubu.Json.Template
 			var template = repository.GetTemplate(elementType);
 			if(v is IList){
 				var list = (IList)v;
-				var objects = new List<object>();
+				var objects = (IList)ReflectionSupport.CreateNewInstance(t);
 				foreach(var o in list){
 					var des = template.FromJsonValue(elementType,o);
 					objects.Add(des);
@@ -52,7 +53,7 @@ namespace Tenkafubu.Json.Template
 			}else{
 				var des = template.FromJsonValue(elementType,v);
 					
-				var objects = new List<object>();
+				var objects = (IList)ReflectionSupport.CreateNewInstance(t);
 				objects.Add(des);
 				return objects;
 			}
