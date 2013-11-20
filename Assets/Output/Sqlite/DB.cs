@@ -22,6 +22,8 @@ namespace Tenkafubu.Sqlite
 		public TableOperation<T> GetOperation<T>() where T : class{
 			return new TableOperation<T>(database,repo.GetTableConverter<T>());
 		}
+
+
 		
 		public void Close(){
 			database.Close();
