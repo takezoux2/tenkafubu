@@ -6,16 +6,18 @@ namespace Tenkafubu.Sqlite
 	{
 		SqliteDatabase database;
 		ConverterRepository repo;
-		
+		string filePath;
+
 		public SqliteDatabase Database{
 			get{
 				return database;
 			}
 		}
 		
-		public DB (SqliteDatabase database)
+		public DB (string filePath)
 		{
-			this.database = database;
+			this.filePath = filePath;
+			Reopen();
 			repo = ConverterRepository.Default;
 		}
 		
@@ -23,10 +25,26 @@ namespace Tenkafubu.Sqlite
 			return new TableOperation<T>(database,repo.GetTableConverter<T>());
 		}
 
+		public void Reopen(){
+			if(database != null){
+				Close ();
+			}
+			database = new SqliteDatabase();
+			database.Open(filePath);
+		}
 
+
+		public void DeleteDBFile(){
+			Close ();
+			System.IO.File.Delete(filePath);
+			Reopen ();
+		}
 		
 		public void Close(){
-			database.Close();
+			if(database !=null){
+				database.Close();
+				database = null;
+			}
 		}
 		
 		

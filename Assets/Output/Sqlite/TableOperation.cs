@@ -7,6 +7,11 @@ namespace Tenkafubu.Sqlite
 	{
 		SqliteDatabase database;
 		TableConverter<T> converter;
+
+		public TableConverter<T> Converter{
+			get{ return converter;}
+		}
+
 		public TableOperation (SqliteDatabase database,
 			TableConverter<T> tableConverter)
 		{
@@ -38,7 +43,23 @@ namespace Tenkafubu.Sqlite
 		}
 		
 		public bool Insert(T obj){
-			return database.ExecuteNonQuery(converter.ToInsert(obj)) > 0;
+			if( database.ExecuteNonQuery(converter.ToInsert(obj)) > 0){
+				if(converter.IsAutoIncrement){
+					converter.SetAutoIncrementId(obj,GetAutoIncrementValue());
+				}
+				return true;
+			}else return false;
+		}
+
+		protected long GetAutoIncrementValue(){
+			var rs = database.ExecuteQuery("SELECT last_insert_rowid();");
+			using(rs){
+				if(rs.Next()){
+					return rs.GetLong(0);
+				}else{
+					return -1;
+				}
+			}
 		}
 		public bool Update(T obj){
 			return database.ExecuteNonQuery(converter.ToUpdate(obj)) > 0;

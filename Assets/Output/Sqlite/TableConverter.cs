@@ -1,5 +1,6 @@
 using System;
 
+
 namespace Tenkafubu.Sqlite
 {
 	public interface TableConverterRoot{
@@ -7,6 +8,9 @@ namespace Tenkafubu.Sqlite
 	
 	public interface TableConverter<T> : TableConverterRoot
 	{
+		bool IsAutoIncrement{get;}
+		void SetAutoIncrementId(T obj, long id);
+
 		string TableName{get;}
 		
 		T FromRow(SqliteDatabase.ResultSet resultSet);
@@ -19,7 +23,8 @@ namespace Tenkafubu.Sqlite
 		string ToDeleteAll();
 		string ToCreateTable();
 		string ToDropTable();
-		
+
+
 	}
 }
 

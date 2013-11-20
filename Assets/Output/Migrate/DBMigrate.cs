@@ -16,7 +16,7 @@ namespace Tenkafubu.Migrate
 {
 	public class DBMigrate
 	{
-		public HashMismatchAction hashMismatchAction = HashMismatchAction.RecreateTable;
+		public HashMismatchAction hashMismatchAction = HashMismatchAction.ThrowException;
 		DB targetDb;
 
 		public DBMigrate (DB targetDb)
@@ -69,6 +69,8 @@ namespace Tenkafubu.Migrate
 			}
 
 		}
+
+
 		
 		string GetHash(string[] sqls){
 			string join = string.Join("_",sqls);

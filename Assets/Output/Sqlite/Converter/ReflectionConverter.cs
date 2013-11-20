@@ -15,6 +15,21 @@ namespace Tenkafubu.Sqlite.Converter
 				return desc.tableName;
 			}
 		}
+
+		public void SetAutoIncrementId (T obj, long id)
+		{
+			if(desc.primaryKeyField.FieldType == typeof(long)){
+				desc.primaryKeyField.Set(obj,id);
+			}else{
+				desc.primaryKeyField.Set (obj,(int)id);
+			}
+		}
+
+		public bool IsAutoIncrement {
+			get {
+				return desc.primaryKeyField.autoIncrement;
+			}
+		}
 		
 		public ReflectionConverter (ClassDesc desc,ConverterRepository repo)
 		{
