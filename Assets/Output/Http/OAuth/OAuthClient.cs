@@ -8,6 +8,12 @@ using Tenkafubu.Concurrent.Factory;
 
 namespace Tenkafubu.Http.OAuth
 {
+
+	/// <summary>
+	/// This class is OAuth1.0 client modified to use json.
+	/// Post body is MD5 hashed and appended as body_hash in making oauth_signature.
+	/// 
+	/// </summary>
 	public class OAuthClient : AbstractHttpClient
 	{
 		string token;
