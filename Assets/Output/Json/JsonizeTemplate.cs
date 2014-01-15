@@ -14,6 +14,11 @@ namespace Tenkafubu.Json
 		bool IsTarget(Type t);
 		void SetReopsitory(TemplateRepository repository);
 	}
+
+	public interface WithTargetClass : JsonizeTemplate
+	{
+		Type[] Classes{get;}
+	}
 	
 	
 }

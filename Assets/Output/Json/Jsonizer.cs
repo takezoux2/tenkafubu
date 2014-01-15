@@ -20,7 +20,10 @@ namespace Tenkafubu.Json{
 			defaultInstance = null;
 		}
 	
-		TemplateRepository repository;
+		protected TemplateRepository repository;
+		public TemplateRepository Repo{
+			get{return repository;}
+		}
 		
 		public Jsonizer(TemplateRepository repo){
 			repository = repo;
@@ -28,6 +31,14 @@ namespace Tenkafubu.Json{
 		
 		public void RegisterTemplate<T>(JsonizeTemplate template){
 			repository.Register(typeof(T),template);
+			if(template is WithTargetClass){
+				RegisterTemplate(template as WithTargetClass);
+			}
+		}
+		public void RegisterTemplate(WithTargetClass template){
+			foreach(var t in template.Classes){
+				repository.Register(t,template);
+			}
 		}
 		
 		public JsonizeTemplate GetTemplate<T>(){
