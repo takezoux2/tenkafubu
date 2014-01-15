@@ -35,7 +35,12 @@ namespace Tenkafubu.Migrate
 				targetDb.GetOperation<MigrateRecord>().Insert(record);
 			}else{
 				string[] subarray = null;
-				Array.Resize(ref subarray,record.queryCount);
+				if(record.queryCount == sqls.Length){
+					subarray = sqls;
+				}else{
+					subarray = new string[record.queryCount];
+					Array.Copy(sqls,subarray,record.queryCount);
+				}
 				var sqlHash = GetHash(subarray);
 				if(record.queryCount > 0 && record.sqlHash != sqlHash ){
 					switch(hashMismatchAction){
