@@ -25,6 +25,7 @@ namespace Tenkafubu.Migrate
 			var db = new DB("Temp/TestMigrateSQL.db");
 			db.DeleteDBFile();
 			var migrate = new DBMigrate(db);
+			migrate.hashMismatchAction = HashMismatchAction.RecreateTable;
 			
 			migrate.Migrate("Role",
 			                "CREATE TABLE Role( id INTEGER);",

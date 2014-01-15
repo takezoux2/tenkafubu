@@ -28,6 +28,7 @@ namespace Tenkafubu.Json
 			repo.AddGenerator(new ReflectionTemplateGenerator());
 			repo.Register(new ArrayTemplate());
 			repo.Register(new ListTemplate());
+			repo.Register(new MapTemplate());
 			repo.Register(typeof(int),new IntTemplate());
 			repo.Register(typeof(long),new LongTemplate());
 			repo.Register(typeof(float),new FloatTemplate());

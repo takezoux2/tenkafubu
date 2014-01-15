@@ -79,6 +79,19 @@ namespace Tenkafubu.Json
 				AssertUser(users[i],des[i]);
 			}
 		}
+
+		[UnitTest]
+		public void TestSerializeDictionary(){
+			var dict = new Dictionary<string,object>();
+			dict["user"] = new User(23,"hogehoge");
+
+			var json = Jsonizer.Default.ToJson(dict);
+			var des = Jsonizer.Default.FromJson<Dictionary<string,object>>(json);
+			var user = Jsonizer.Default.FromJsonObject<User>(des["user"]);
+			Assert.Equal(dict["user"].ToString(),user.ToString());
+
+		}
+
 	}
 	
 	public class User{
@@ -88,6 +101,13 @@ namespace Tenkafubu.Json
 		public float rate;
 		public double rate2;
 		public DateTime lastLogin;
+
+		public User(){}
+		public User(long id,string name){
+			this.id = id;
+			this.name = name;
+			lastLogin = DateTime.FromBinary(0).ToLocalTime();
+		}
 		
 		public override string ToString ()
 		{
