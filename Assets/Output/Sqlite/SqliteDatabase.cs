@@ -42,52 +42,52 @@ namespace Tenkafubu.Sqlite
 		public const int SQLITE_ERROR_ALREADY_OPENED = -2;
 		public const int SQLITE_ERROR_NOT_OPENED = -1;
 	        
-	    [DllImport("sqlite3.dll", EntryPoint = "sqlite3_open")]
+	    [DllImport("sqlite3", EntryPoint = "sqlite3_open")]
 	    internal static extern int sqlite3_open(string filename, out IntPtr db);
 	 
-	    [DllImport("sqlite3.dll", EntryPoint = "sqlite3_close")]
+	    [DllImport("sqlite3", EntryPoint = "sqlite3_close")]
 	    internal static extern int sqlite3_close(IntPtr db);
 	 
-	    [DllImport("sqlite3.dll", EntryPoint = "sqlite3_prepare_v2")]
+	    [DllImport("sqlite3", EntryPoint = "sqlite3_prepare_v2")]
 	    internal static extern int sqlite3_prepare_v2(IntPtr db, string zSql, int nByte, out IntPtr ppStmpt, IntPtr pzTail);
 	 
-	    [DllImport("sqlite3.dll", EntryPoint = "sqlite3_step")]
+	    [DllImport("sqlite3", EntryPoint = "sqlite3_step")]
 	    internal static extern int sqlite3_step(IntPtr stmHandle);
 		
-		[DllImport("sqlite3.dll", EntryPoint = "sqlite3_errcode")]
+		[DllImport("sqlite3", EntryPoint = "sqlite3_errcode")]
 		internal static extern int sqlite3_errcode(IntPtr db);
 		
-		[DllImport("sqlite3.dll", EntryPoint = "sqlite3_extended_errcode")]
+		[DllImport("sqlite3", EntryPoint = "sqlite3_extended_errcode")]
 		internal static extern int sqlite3_extended_errcode(IntPtr db);
 		
-		[DllImport("sqlite3.dll", EntryPoint = "sqlite3_changes")]
+		[DllImport("sqlite3", EntryPoint = "sqlite3_changes")]
 		internal static extern int sqlite3_changes(IntPtr db);
 		
-	    [DllImport("sqlite3.dll", EntryPoint = "sqlite3_finalize")]
+	    [DllImport("sqlite3", EntryPoint = "sqlite3_finalize")]
 	    internal static extern int sqlite3_finalize(IntPtr stmHandle);
 	 
-	    [DllImport("sqlite3.dll", EntryPoint = "sqlite3_errmsg")]
+	    [DllImport("sqlite3", EntryPoint = "sqlite3_errmsg")]
 	    internal static extern IntPtr sqlite3_errmsg(IntPtr db);
 	 
-	    [DllImport("sqlite3.dll", EntryPoint = "sqlite3_column_count")]
+	    [DllImport("sqlite3", EntryPoint = "sqlite3_column_count")]
 	    internal static extern int sqlite3_column_count(IntPtr stmHandle);
 	 
-	    [DllImport("sqlite3.dll", EntryPoint = "sqlite3_column_name")]
+	    [DllImport("sqlite3", EntryPoint = "sqlite3_column_name")]
 	    internal static extern IntPtr sqlite3_column_name(IntPtr stmHandle, int iCol);
 	 
-	    [DllImport("sqlite3.dll", EntryPoint = "sqlite3_column_type")]
+	    [DllImport("sqlite3", EntryPoint = "sqlite3_column_type")]
 	    internal static extern int sqlite3_column_type(IntPtr stmHandle, int iCol);
 	 
-	    [DllImport("sqlite3.dll", EntryPoint = "sqlite3_column_int")]
+	    [DllImport("sqlite3", EntryPoint = "sqlite3_column_int")]
 	    internal static extern int sqlite3_column_int(IntPtr stmHandle, int iCol);
 		
-	    [DllImport("sqlite3.dll", EntryPoint = "sqlite3_column_int64")]
+	    [DllImport("sqlite3", EntryPoint = "sqlite3_column_int64")]
 	    internal static extern long sqlite3_column_int64(IntPtr stmHandle, int iCol);
 	 
-	    [DllImport("sqlite3.dll", EntryPoint = "sqlite3_column_text")]
+	    [DllImport("sqlite3", EntryPoint = "sqlite3_column_text")]
 	    internal static extern IntPtr sqlite3_column_text(IntPtr stmHandle, int iCol);
 	 
-	    [DllImport("sqlite3.dll", EntryPoint = "sqlite3_column_double")]
+	    [DllImport("sqlite3", EntryPoint = "sqlite3_column_double")]
 	    internal static extern double sqlite3_column_double(IntPtr stmHandle, int iCol);
 	 
 	    private IntPtr _connection;
